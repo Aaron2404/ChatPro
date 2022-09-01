@@ -28,7 +28,7 @@ public class NameColor implements CommandExecutor {
         player.openInventory(colorSelectionMenu);
         player.playSound(player.getLocation(), Sound.ARROW_HIT, 1, 1);
 
-        ItemStack defaultColor = new Wool(DyeColor.WHITE).toItemStack();
+        ItemStack defaultColor = new ItemStack(Material.WOOL, 1, (short)0);
         ItemMeta defaultColorMD = defaultColor.getItemMeta();
         defaultColorMD.setDisplayName(ChatColor.WHITE + "Default");
         ArrayList<String> defaultLore = new ArrayList<>();
@@ -36,7 +36,7 @@ public class NameColor implements CommandExecutor {
         defaultColorMD.setLore(defaultLore);
         defaultColor.setItemMeta(defaultColorMD);
 
-        ItemStack lightBlueColor = new Wool(DyeColor.LIGHT_BLUE).toItemStack();
+        ItemStack lightBlueColor = new ItemStack(Material.WOOL, 1, (short)3);
         ItemMeta lightBlueColorMD = lightBlueColor.getItemMeta();
         lightBlueColorMD.setDisplayName(ChatColor.AQUA + "Aqua");
         ArrayList<String> aquaLore = new ArrayList<>();
@@ -44,7 +44,7 @@ public class NameColor implements CommandExecutor {
         lightBlueColorMD.setLore(aquaLore);
         lightBlueColor.setItemMeta(lightBlueColorMD);
 
-        ItemStack greenColor = new Wool(DyeColor.GREEN).toItemStack();
+        ItemStack greenColor = new ItemStack(Material.WOOL, 1, (short)5);
         ItemMeta greenColorMD = greenColor.getItemMeta();
         greenColorMD.setDisplayName(ChatColor.GREEN + "Green");
         ArrayList<String> greenLore = new ArrayList<>();
