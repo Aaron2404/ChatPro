@@ -3,6 +3,10 @@ package dev.boostio.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 public class ColorCharParser {
 
     public static void ColorCodes(AsyncPlayerChatEvent event){

@@ -1,17 +1,33 @@
 package dev.boostio;
 
+import dev.boostio.Commands.NameColor;
+import dev.boostio.Utils.PlayerData;
+import dev.boostio.event.ChooseColor;
 import dev.boostio.event.OnPlayerChat;
+import dev.boostio.event.PreLogin;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.UUID;
+
+@Getter
 public final class ChatPro extends JavaPlugin {
 
+
+    private static ChatPro instance;
+    private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
     public static boolean colorCodes = false;
     String version = getDescription().getVersion();
 
+    public static ChatPro getInstance() {return instance;}
+
     @Override
     public void onEnable() {
+
+        instance = this;
 
         saveDefaultConfig();
 
@@ -25,6 +41,11 @@ public final class ChatPro extends JavaPlugin {
 
         //Events
         getServer().getPluginManager().registerEvents(new OnPlayerChat(), this);
+        getServer().getPluginManager().registerEvents(new PreLogin(), this);
+        getServer().getPluginManager().registerEvents(new ChooseColor(), this);
+
+        //Commands
+        getCommand("color").setExecutor(new NameColor());
     }
 
     @Override

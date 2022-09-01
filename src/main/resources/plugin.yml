@@ -1,3 +1,6 @@
 name: ChatPro
 version: '${project.version}'
 main: dev.boostio.ChatPro
+
+commands:
+  color:
