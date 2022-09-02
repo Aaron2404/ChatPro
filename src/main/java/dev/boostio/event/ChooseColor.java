@@ -24,6 +24,8 @@ public class ChooseColor implements Listener {
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
 
+        //TODO: Kijken of ik hier een functie van kan maken
+
         if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.WHITE + "Default")){
             ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(ChatColor.WHITE);
             player.sendMessage("Selected color:" + ChatColor.WHITE + ChatColor.BOLD + "Default");
