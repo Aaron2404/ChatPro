@@ -23,6 +23,11 @@ public class NameColor implements CommandExecutor {
             return false;
         }
 
+        if(!sender.hasPermission("ChatPro.nameColor")){
+            sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+            return false;
+        }
+
         Player player = (Player) sender;
 
         player.openInventory(colorSelectionMenu);
