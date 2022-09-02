@@ -18,13 +18,12 @@ public class OnPlayerChat implements Listener {
     public void onLeave(AsyncPlayerChatEvent event) {
        Player player = event.getPlayer();
 
-        if  (ChatPro.colorCodes) {
+        if(ChatPro.colorCodes) {
             event.setMessage(colorCodes.setColor(event.getMessage()));
             event.setMessage(FormatTypes.setFormat(event.getMessage()));
         }
 
        ChatColor chatColor = ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).getChatColorName();
-
        event.setFormat(chatColor + "" + ChatColor.BOLD + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage());
     }
 }
