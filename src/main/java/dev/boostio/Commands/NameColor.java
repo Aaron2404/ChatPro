@@ -1,5 +1,8 @@
 package dev.boostio.Commands;
 
+import dev.boostio.ChatPro;
+import dev.boostio.Utils.ColorCodes;
+import dev.boostio.Utils.FormatTypes;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 public class NameColor implements CommandExecutor {
 
     public static Inventory colorSelectionMenu = Bukkit.createInventory(null, 9, "Colors");
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -24,7 +28,7 @@ public class NameColor implements CommandExecutor {
         }
 
         if(!sender.hasPermission("ChatPro.nameColor")){
-            sender.sendMessage(ChatColor.RED + "You do not have permission to execute this command.");
+            sender.sendMessage(ColorCodes.setColor(ChatPro.colorCommandNoPermission));
             return false;
         }
 

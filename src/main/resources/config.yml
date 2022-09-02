@@ -6,5 +6,9 @@
 # | |____  | | | | | (_| | | |_    | |      | |    | (_) |
 #  \_____| |_| |_|  \__,_|  \__|   |_|      |_|     \___/
 
+#enable colorCodes in player messages
+colorCodes: true
 
-colorCodes: true #enable colorCodes in player messages
+#The message that gets sent if the player doesn't have permission to execute the command
+#Note: ColorCodes are supported in the message.
+colorCommandNoPermission: "You do not have permission to execute this command."

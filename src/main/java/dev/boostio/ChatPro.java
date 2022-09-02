@@ -20,6 +20,7 @@ public final class ChatPro extends JavaPlugin {
     private static ChatPro instance;
     private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
     public static boolean colorCodes = false;
+    public static String colorCommandNoPermission = "";
     String version = getDescription().getVersion();
 
     public static ChatPro getInstance() {return instance;}
@@ -33,6 +34,7 @@ public final class ChatPro extends JavaPlugin {
 
         try{
             colorCodes = getConfig().getBoolean("colorCodes");
+            colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
         }catch(Exception e){
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");
         }

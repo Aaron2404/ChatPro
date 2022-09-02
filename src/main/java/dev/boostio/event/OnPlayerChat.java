@@ -12,15 +12,13 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class OnPlayerChat implements Listener {
 
-    ColorCodes colorCodes = new ColorCodes();
-    FormatTypes formatTypes = new FormatTypes();
     @EventHandler
-    public void onLeave(AsyncPlayerChatEvent event) {
+    public void onChat(AsyncPlayerChatEvent event) {
        Player player = event.getPlayer();
 
         if(ChatPro.colorCodes) {
             if(player.hasPermission("ChatPro.Colors")){
-                event.setMessage(colorCodes.setColor(event.getMessage()));
+                event.setMessage(ColorCodes.setColor(event.getMessage()));
             }
             if(player.hasPermission("ChatPro.Formats") ){
                 event.setMessage(FormatTypes.setFormat(event.getMessage()));

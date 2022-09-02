@@ -1,7 +1,7 @@
 package dev.boostio.Utils;
 
 public class ColorCodes {
-    public String setColor(String output) {
+    public static String setColor(String output) {
         //Replaces each ColorCode in a player message with a chat color.
         String c1 = output.replace("&0", "§0"); //Black
         String c2 = c1.replace("&1", "§1"); //Dark Blue
