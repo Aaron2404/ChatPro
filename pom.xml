@@ -70,7 +70,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
-                    <outputDirectory>C:/Users/Bram/Desktop/Test Server/plugins</outputDirectory>
+                    <outputDirectory>C:\DwarfServer\plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
