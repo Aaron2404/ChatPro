@@ -24,21 +24,15 @@ public class ChooseColor implements Listener {
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
 
-        //TODO: Kijken of ik hier een functie van kan maken
-
-        if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.WHITE + "Default")){
-            ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(ChatColor.WHITE);
-            player.sendMessage("Selected color:" + ChatColor.WHITE + ChatColor.BOLD + "Default");
-            player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
-        }
-        if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + "Aqua")){
-            ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(ChatColor.AQUA);
-            player.sendMessage("Selected color:" + ChatColor.AQUA + ChatColor.BOLD + "Aqua");
-            player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
-        }
-        if (event.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + "Green")){
-            ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(ChatColor.GREEN);
-            player.sendMessage("Selected color:" + ChatColor.GREEN + ChatColor.BOLD + "Green");
+        setChatColor(event, ChatColor.WHITE, "Default");
+        setChatColor(event, ChatColor.AQUA, "Aqua");
+        setChatColor(event, ChatColor.GREEN, "Green");
+    }
+    protected void setChatColor(InventoryClickEvent event, ChatColor chatColor, String name){
+        Player player = (Player) event.getWhoClicked();
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equals(chatColor + name)){
+            ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(chatColor);
+            player.sendMessage("Selected color:" + chatColor + ChatColor.BOLD + name);
             player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
         }
     }
