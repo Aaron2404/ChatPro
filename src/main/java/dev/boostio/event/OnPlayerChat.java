@@ -19,8 +19,12 @@ public class OnPlayerChat implements Listener {
        Player player = event.getPlayer();
 
         if(ChatPro.colorCodes) {
-            event.setMessage(colorCodes.setColor(event.getMessage()));
-            event.setMessage(FormatTypes.setFormat(event.getMessage()));
+            if(player.hasPermission("ChatPro.Colors")){
+                event.setMessage(colorCodes.setColor(event.getMessage()));
+            }
+            if(player.hasPermission("ChatPro.Formats") ){
+                event.setMessage(FormatTypes.setFormat(event.getMessage()));
+            }
         }
 
        ChatColor chatColor = ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).getChatColorName();
