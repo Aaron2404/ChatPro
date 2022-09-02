@@ -9,7 +9,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class PlayerData {
-    private UUID uuid;
-
     ChatColor chatColorName;
+    private UUID uuid;
 }

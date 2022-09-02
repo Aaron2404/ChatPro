@@ -1,10 +1,10 @@
 package dev.boostio;
 
 import dev.boostio.Commands.NameColor;
+import dev.boostio.Events.AsyncPlayerChat;
+import dev.boostio.Events.AsyncPlayerPreLogin;
+import dev.boostio.Events.InventoryClick;
 import dev.boostio.Utils.PlayerData;
-import dev.boostio.event.ChooseColor;
-import dev.boostio.event.OnPlayerChat;
-import dev.boostio.event.PreLogin;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,14 +16,13 @@ import java.util.UUID;
 @Getter
 public final class ChatPro extends JavaPlugin {
 
-
-    private static ChatPro instance;
-    private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
     public static boolean colorCodes = false;
     public static String colorCommandNoPermission = "";
+    @Getter
+    private static ChatPro instance;
+    private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
     String version = getDescription().getVersion();
 
-    public static ChatPro getInstance() {return instance;}
 
     @Override
     public void onEnable() {
@@ -32,19 +31,19 @@ public final class ChatPro extends JavaPlugin {
 
         saveDefaultConfig();
 
-        try{
+        try {
             colorCodes = getConfig().getBoolean("colorCodes");
             colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
-        }catch(Exception e){
+        } catch (Exception e) {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");
         }
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version);
 
         //Events
-        getServer().getPluginManager().registerEvents(new OnPlayerChat(), this);
-        getServer().getPluginManager().registerEvents(new PreLogin(), this);
-        getServer().getPluginManager().registerEvents(new ChooseColor(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerPreLogin(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
 
         //Commands
         getCommand("color").setExecutor(new NameColor());

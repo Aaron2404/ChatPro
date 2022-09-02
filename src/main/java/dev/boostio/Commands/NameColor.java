@@ -1,9 +1,11 @@
 package dev.boostio.Commands;
 
 import dev.boostio.ChatPro;
-import dev.boostio.Utils.ColorCodes;
-import dev.boostio.Utils.FormatTypes;
-import org.bukkit.*;
+import dev.boostio.Utils.ColoringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Wool;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class NameColor implements CommandExecutor {
             return false;
         }
 
-        if(!sender.hasPermission("ChatPro.nameColor")){
-            sender.sendMessage(ColorCodes.setColor(ChatPro.colorCommandNoPermission));
+        if (!sender.hasPermission("chatpro.colorcodes")) {
+            sender.sendMessage(ColoringUtils.setColor(ChatPro.colorCommandNoPermission));
             return false;
         }
 
@@ -37,7 +38,7 @@ public class NameColor implements CommandExecutor {
         player.openInventory(colorSelectionMenu);
         player.playSound(player.getLocation(), Sound.ARROW_HIT, 1, 1);
 
-        ItemStack defaultColor = new ItemStack(Material.WOOL, 1, (short)0);
+        ItemStack defaultColor = new ItemStack(Material.WOOL, 1, (short) 0);
         ItemMeta defaultColorMD = defaultColor.getItemMeta();
         defaultColorMD.setDisplayName(ChatColor.WHITE + "Default");
         ArrayList<String> defaultLore = new ArrayList<>();
@@ -45,7 +46,7 @@ public class NameColor implements CommandExecutor {
         defaultColorMD.setLore(defaultLore);
         defaultColor.setItemMeta(defaultColorMD);
 
-        ItemStack lightBlueColor = new ItemStack(Material.WOOL, 1, (short)3);
+        ItemStack lightBlueColor = new ItemStack(Material.WOOL, 1, (short) 3);
         ItemMeta lightBlueColorMD = lightBlueColor.getItemMeta();
         lightBlueColorMD.setDisplayName(ChatColor.AQUA + "Aqua");
         ArrayList<String> aquaLore = new ArrayList<>();
@@ -53,7 +54,7 @@ public class NameColor implements CommandExecutor {
         lightBlueColorMD.setLore(aquaLore);
         lightBlueColor.setItemMeta(lightBlueColorMD);
 
-        ItemStack greenColor = new ItemStack(Material.WOOL, 1, (short)5);
+        ItemStack greenColor = new ItemStack(Material.WOOL, 1, (short) 5);
         ItemMeta greenColorMD = greenColor.getItemMeta();
         greenColorMD.setDisplayName(ChatColor.GREEN + "Green");
         ArrayList<String> greenLore = new ArrayList<>();
@@ -62,7 +63,7 @@ public class NameColor implements CommandExecutor {
         greenColor.setItemMeta(greenColorMD);
 
 
-        //Add Items to the class menu
+        // Add Items to the class menu
         colorSelectionMenu.setItem(0, defaultColor);
         colorSelectionMenu.setItem(1, lightBlueColor);
         colorSelectionMenu.setItem(2, greenColor);
