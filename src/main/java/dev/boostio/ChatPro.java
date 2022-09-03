@@ -4,6 +4,7 @@ import dev.boostio.Commands.NameColor;
 import dev.boostio.Events.AsyncPlayerChat;
 import dev.boostio.Events.AsyncPlayerPreLogin;
 import dev.boostio.Events.InventoryClick;
+import dev.boostio.Events.PlayerQuit;
 import dev.boostio.Utils.PlayerData;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -41,8 +42,9 @@ public final class ChatPro extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version);
 
         //Events
-        getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), this);
         getServer().getPluginManager().registerEvents(new AsyncPlayerPreLogin(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
 
         //Commands

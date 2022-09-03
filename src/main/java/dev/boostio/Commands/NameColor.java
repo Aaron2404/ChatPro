@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class NameColor implements CommandExecutor {
 
-    public static Inventory colorSelectionMenu = Bukkit.createInventory(null, 9, "Colors");
+    public static Inventory colorSelectionMenu = Bukkit.createInventory(null, 9, "Color Selector GUI");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

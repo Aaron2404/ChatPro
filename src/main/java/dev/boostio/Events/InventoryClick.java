@@ -18,12 +18,12 @@ public class InventoryClick implements Listener {
         Player player = (Player) event.getWhoClicked();
         InventoryView inventoryView = player.getOpenInventory();
 
-        if (!inventoryView.getTopInventory().getName().equals("Colors"))
+        if (!inventoryView.getTopInventory().getName().equals("Color Selector GUI"))
             return;
 
         event.setCancelled(true);
 
-        if (!event.getClickedInventory().getName().equals("Colors"))
+        if (!event.getClickedInventory().getName().equals("Color Selector GUI"))
             return;
 
         if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)
