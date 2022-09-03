@@ -3,7 +3,9 @@ package dev.boostio.Events;
 import dev.boostio.ChatPro;
 import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.FormatTypes;
+import dev.boostio.Utils.IPv4ValidatorRegex;
 import dev.boostio.Utils.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,18 +44,27 @@ public class AsyncPlayerChat implements Listener {
         Object[] filteredWords = ChatPro.filteredWords.toArray();
         String playerMessage = event.getMessage().toLowerCase();
 
+        String[] splitWords = playerMessage.split(" ");
+
+        for ( String separateWord : splitWords) {
+            boolean ipFound = IPv4ValidatorRegex.isValid(separateWord);
+            if (ipFound) {
+                event.setCancelled(true);
+                player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
+                return;
+            }
+        }
+
         //Simple for loop to check if the message sent by the player contains a word that on the filter list.
-        for(int i =0; i <  filteredWords.length; i++)
-        {
-            CharSequence filteredWord = (CharSequence) filteredWords[i];
+        for (Object word : filteredWords) {
+            CharSequence filteredWord = (CharSequence) word;
             String filterWordString = filteredWord.toString().toLowerCase();
-            if(playerMessage.contains(filterWordString))
-            {
-                if(ChatPro.blockMessage){
+            if (playerMessage.contains(filterWordString)) {
+                if (ChatPro.blockMessage) {
                     player.sendMessage("Your message contained a swear word, and it has been canceled.");
                     event.setCancelled(true);
                 }
-                if(ChatPro.replaceWordInMessage){
+                if (ChatPro.replaceWordInMessage) {
                     String replacePlayerMessage = playerMessage.replace(filterWordString, ChatPro.filteredWordReplacement);
                     event.setMessage(replacePlayerMessage);
                 }
