@@ -19,6 +19,7 @@ filterIPs: true
 
 #Blocks any message that contains a filtered word.
 blockMessage: false
+blockedMessageNotification: "Your message contained a filtered word, and it has been canceled."
 
 #Replace the filtered word instead of blocking the entire message.
 replaceWordInMessage: true

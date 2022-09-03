@@ -19,12 +19,15 @@ import java.util.UUID;
 @Getter
 public final class ChatPro extends JavaPlugin {
 
-    public static boolean colorCodes = false;
+
     public static String colorCommandNoPermission = "";
+    public static String blockedMessageNotification = "";
+    public static String filteredWordReplacement = "";
+    public static boolean colorCodes = false;
     public static boolean blockMessage = false;
     public static boolean replaceWordInMessage = false;
     public static boolean filterIPs = false;
-    public static String filteredWordReplacement = "";
+
 
     public static List<String> filteredWords;
 
@@ -48,6 +51,7 @@ public final class ChatPro extends JavaPlugin {
             filterIPs = getConfig().getBoolean("filterIPs");
             colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
             filteredWordReplacement = getConfig().getString("filteredWordReplacement");
+            blockedMessageNotification = getConfig().getString("blockedMessageNotification");
             filteredWords = getConfig().getStringList("filteredWords");
         } catch (Exception e) {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");

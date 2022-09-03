@@ -69,7 +69,7 @@ public class AsyncPlayerChat implements Listener {
             String filterWordString = filteredWord.toString().toLowerCase();
             if (playerMessage.contains(filterWordString)) {
                 if (ChatPro.blockMessage) {
-                    player.sendMessage("Your message contained a swear word, and it has been canceled.");
+                    player.sendMessage(ChatPro.blockedMessageNotification);
                     event.setCancelled(true);
                 }
                 if (ChatPro.replaceWordInMessage) {
