@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.meta.ItemMeta;
 
 
 public class InventoryClick implements Listener {
@@ -24,8 +23,7 @@ public class InventoryClick implements Listener {
         if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
         event.setCancelled(true);
 
-        ItemMeta itemMeta = event.getCurrentItem().getItemMeta();
-        if (!itemMeta.hasDisplayName()) {
+        if (!event.getClickedInventory().getName().equals("Colors")) {
             return;
         }
 

@@ -36,7 +36,7 @@ public class NameColor implements CommandExecutor {
         Player player = (Player) sender;
 
         player.openInventory(colorSelectionMenu);
-        player.playSound(player.getLocation(), Sound.ARROW_HIT, 1, 1);
+        player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
 
         ItemStack defaultColor = new ItemStack(Material.WOOL, 1, (short) 0);
         ItemMeta defaultColorMD = defaultColor.getItemMeta();
