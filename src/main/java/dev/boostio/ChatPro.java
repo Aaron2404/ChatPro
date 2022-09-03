@@ -11,7 +11,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -19,6 +21,12 @@ public final class ChatPro extends JavaPlugin {
 
     public static boolean colorCodes = false;
     public static String colorCommandNoPermission = "";
+    public static boolean blockMessage = false;
+    public static boolean replaceWordInMessage = false;
+    public static String filteredWordReplacement = "";
+
+    public static List<String> filteredWords;
+
     @Getter
     private static ChatPro instance;
     private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
@@ -34,7 +42,11 @@ public final class ChatPro extends JavaPlugin {
 
         try {
             colorCodes = getConfig().getBoolean("colorCodes");
+            blockMessage = getConfig().getBoolean("blockMessage");
+            replaceWordInMessage = getConfig().getBoolean("replaceWordInMessage");
             colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
+            filteredWordReplacement = getConfig().getString("filteredWordReplacement");
+            filteredWords = getConfig().getStringList("filteredWords");
         } catch (Exception e) {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");
         }

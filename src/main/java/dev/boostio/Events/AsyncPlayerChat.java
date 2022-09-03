@@ -10,12 +10,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.lang.reflect.Array;
+
 public class AsyncPlayerChat implements Listener {
 
     @EventHandler
-    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+    public void onAsyncPlayerChatColourReplace(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
+        /// Replacing each char code in a message using the setColor Util.
         if (ChatPro.colorCodes) {
             if (player.hasPermission("chatpro.colors")) {
                 event.setMessage(ColoringUtils.setColor(event.getMessage()));
@@ -27,7 +30,34 @@ public class AsyncPlayerChat implements Listener {
 
         PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
 
+        //Player name format
         ChatColor chatColor = data.getChatColorName();
         event.setFormat(chatColor + "" + ChatColor.BOLD + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage());
+    }
+    @EventHandler
+    public void onAsyncPlayerChatWordFilter(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+
+        //Turn the list fi
+        Object[] filteredWords = ChatPro.filteredWords.toArray();
+        String playerMessage = event.getMessage().toLowerCase();
+
+        //Simple for loop to check if the message sent by the player contains a word that on the filter list.
+        for(int i =0; i <  filteredWords.length; i++)
+        {
+            CharSequence filteredWord = (CharSequence) filteredWords[i];
+            String filterWordString = filteredWord.toString().toLowerCase();
+            if(playerMessage.contains(filterWordString))
+            {
+                if(ChatPro.blockMessage){
+                    player.sendMessage("Your message contained a swear word, and it has been canceled.");
+                    event.setCancelled(true);
+                }
+                if(ChatPro.replaceWordInMessage){
+                    String replacePlayerMessage = playerMessage.replace(filterWordString, ChatPro.filteredWordReplacement);
+                    event.setMessage(replacePlayerMessage);
+                }
+            }
+        }
     }
 }
