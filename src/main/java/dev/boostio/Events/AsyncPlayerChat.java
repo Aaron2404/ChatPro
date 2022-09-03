@@ -40,18 +40,26 @@ public class AsyncPlayerChat implements Listener {
     public void onAsyncPlayerChatWordFilter(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        //Turn the list fi
+        //Turn the list into an array.
         Object[] filteredWords = ChatPro.filteredWords.toArray();
         String playerMessage = event.getMessage().toLowerCase();
 
         String[] splitWords = playerMessage.split(" ");
 
-        for ( String separateWord : splitWords) {
-            boolean ipFound = IPv4ValidatorRegex.isValid(separateWord);
-            if (ipFound) {
-                event.setCancelled(true);
-                player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
-                return;
+        if(ChatPro.filterIPs){
+            for ( String separateWord : splitWords) {
+                boolean ipFound = IPv4ValidatorRegex.isValid(separateWord);
+                if (ipFound) {
+                    if (ChatPro.blockMessage) {
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!" + IPv4ValidatorRegex.ipMessage);
+                        return;
+                    }
+                    if (ChatPro.replaceWordInMessage) {
+                        String replacePlayerMessage = playerMessage.replace( IPv4ValidatorRegex.ipMessage, ChatPro.filteredWordReplacement);
+                        event.setMessage(replacePlayerMessage);
+                    }
+                }
             }
         }
 

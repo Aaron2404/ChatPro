@@ -23,6 +23,7 @@ public final class ChatPro extends JavaPlugin {
     public static String colorCommandNoPermission = "";
     public static boolean blockMessage = false;
     public static boolean replaceWordInMessage = false;
+    public static boolean filterIPs = false;
     public static String filteredWordReplacement = "";
 
     public static List<String> filteredWords;
@@ -44,11 +45,16 @@ public final class ChatPro extends JavaPlugin {
             colorCodes = getConfig().getBoolean("colorCodes");
             blockMessage = getConfig().getBoolean("blockMessage");
             replaceWordInMessage = getConfig().getBoolean("replaceWordInMessage");
+            filterIPs = getConfig().getBoolean("filterIPs");
             colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
             filteredWordReplacement = getConfig().getString("filteredWordReplacement");
             filteredWords = getConfig().getStringList("filteredWords");
         } catch (Exception e) {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");
+        }
+
+        if(replaceWordInMessage && blockMessage){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "You cannot have both replaceWordInMessage and blockMessage enabled, this will result in the messages just being blocked if you want them to be replaced: \n turn off blockMessage in the config.yml");
         }
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version);

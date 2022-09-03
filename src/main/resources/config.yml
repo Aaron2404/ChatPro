@@ -15,12 +15,14 @@ colorCommandNoPermission: "You do not have permission to execute this command."
 
 #List of stings that will be filtered by the plugin.
 filteredWords: ['Fuck', 'Shit', 'Retard', 'Boostio is not epic']
+filterIPs: true
 
 #Blocks any message that contains a filtered word.
-blockMessage: true
+blockMessage: false
 
 #Replace the filtered word instead of blocking the entire message.
-replaceWordInMessage: false
+replaceWordInMessage: true
 filteredWordReplacement: "*"
+
 
 
