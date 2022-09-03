@@ -1,7 +1,6 @@
 package dev.boostio.Events;
 
 import dev.boostio.ChatPro;
-import dev.boostio.Commands.NameColor;
 import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.PlayerData;
 import org.bukkit.ChatColor;
@@ -10,22 +9,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryView;
 
 
 public class InventoryClick implements Listener {
     @EventHandler
     public void onColorSelect(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        InventoryView inventoryView = player.getOpenInventory();
 
-        if (!event.getInventory().equals(NameColor.colorSelectionMenu)) {
+        if (!inventoryView.getTopInventory().getName().equals("Colors"))
             return;
-        }
-        if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null) return;
+
         event.setCancelled(true);
 
-        if (!event.getClickedInventory().getName().equals("Colors")) {
+        if (!event.getClickedInventory().getName().equals("Colors"))
             return;
-        }
+
+        if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)
+            return;
+
 
         String chatColorName = event.getCurrentItem().getItemMeta().getDisplayName();
         ChatColor chatColor = ColoringUtils.convertColor(chatColorName);
