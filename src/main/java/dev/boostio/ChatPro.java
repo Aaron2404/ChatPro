@@ -6,12 +6,12 @@ import dev.boostio.Events.AsyncPlayerPreLogin;
 import dev.boostio.Events.InventoryClick;
 import dev.boostio.Events.PlayerQuit;
 import dev.boostio.Utils.PlayerData;
+import dev.boostio.Utils.UpdateChecker;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +19,7 @@ import java.util.UUID;
 @Getter
 public final class ChatPro extends JavaPlugin {
 
+    public static String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + "ChatPro" + ChatColor.GRAY + "] ";
 
     public static String colorCommandNoPermission = "";
     public static String blockedMessageNotification = "";
@@ -61,8 +62,6 @@ public final class ChatPro extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "You cannot have both replaceWordInMessage and blockMessage enabled, this will result in the messages just being blocked if you want them to be replaced: \n turn off blockMessage in the config.yml");
         }
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version);
-
         //Events
         getServer().getPluginManager().registerEvents(new AsyncPlayerPreLogin(), this);
         getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), this);
@@ -71,6 +70,11 @@ public final class ChatPro extends JavaPlugin {
 
         //Commands
         getCommand("color").setExecutor(new NameColor());
+
+        // Checking for updates
+        UpdateChecker.checkForUpdate();
+
+        Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version + ChatColor.GREEN + " successfully!");
     }
 
     @Override

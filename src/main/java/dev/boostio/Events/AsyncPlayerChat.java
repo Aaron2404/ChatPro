@@ -5,14 +5,11 @@ import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.FormatTypes;
 import dev.boostio.Utils.IPv4ValidatorRegex;
 import dev.boostio.Utils.PlayerData;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.lang.reflect.Array;
 
 public class AsyncPlayerChat implements Listener {
 
@@ -36,6 +33,7 @@ public class AsyncPlayerChat implements Listener {
         ChatColor chatColor = data.getChatColorName();
         event.setFormat(chatColor + "" + ChatColor.BOLD + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage());
     }
+
     @EventHandler
     public void onAsyncPlayerChatWordFilter(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
@@ -46,8 +44,8 @@ public class AsyncPlayerChat implements Listener {
 
         String[] splitWords = playerMessage.split(" ");
 
-        if(ChatPro.filterIPs){
-            for ( String separateWord : splitWords) {
+        if (ChatPro.filterIPs) {
+            for (String separateWord : splitWords) {
                 boolean ipFound = IPv4ValidatorRegex.isValid(separateWord);
                 if (ipFound) {
                     if (ChatPro.blockMessage) {
@@ -56,7 +54,7 @@ public class AsyncPlayerChat implements Listener {
                         return;
                     }
                     if (ChatPro.replaceWordInMessage) {
-                        String replacePlayerMessage = playerMessage.replace( IPv4ValidatorRegex.ipMessage, ChatPro.filteredWordReplacement);
+                        String replacePlayerMessage = playerMessage.replace(IPv4ValidatorRegex.ipMessage, ChatPro.filteredWordReplacement);
                         event.setMessage(replacePlayerMessage);
                     }
                 }
