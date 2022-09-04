@@ -11,6 +11,9 @@ A minecraft plugin that allows you to add colors to your messages by including a
 - Word ignore list
 - Update Checker
 
+## Permissions
+- ```chatpro.colorcodes``` Allow players to use colors.
+- ```chatpro.formats``` Allows players to use formatting
 
 ## Tested Versions
 1.8 And above.
