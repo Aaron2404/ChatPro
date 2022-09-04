@@ -1,5 +1,5 @@
 # ChatPro
-
+A minecraft plugin that allows you to add colors to your messages by including a bukkit color code in your message, and the plugin features a word filter which you can set in the config file.
 
 
 
@@ -7,9 +7,13 @@
 - Add color to your messages by using bukkit color codes
 - Support for bukkit format codes
 - Allowing players to change the color of their name
-
-## Features that are being added:
+- Configuration file
 - Word ignore list
+- Update Checker
+
+## Permissions
+- ```chatpro.colorcodes``` Allow players to use colors.
+- ```chatpro.formats``` Allows players to use formatting
 
 ## Tested Versions
-1.8
+1.8 And above.
