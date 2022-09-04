@@ -24,10 +24,12 @@ public final class ChatPro extends JavaPlugin {
     public static String colorCommandNoPermission = "";
     public static String blockedMessageNotification = "";
     public static String filteredWordReplacement = "";
+    public static String defaultChatColor = "";
     public static boolean colorCodes = false;
     public static boolean blockMessage = false;
     public static boolean replaceWordInMessage = false;
     public static boolean filterIPs = false;
+    public static boolean betterMessageFormat = false;
 
 
     public static List<String> filteredWords;
@@ -50,9 +52,11 @@ public final class ChatPro extends JavaPlugin {
             blockMessage = getConfig().getBoolean("blockMessage");
             replaceWordInMessage = getConfig().getBoolean("replaceWordInMessage");
             filterIPs = getConfig().getBoolean("filterIPs");
+            betterMessageFormat = getConfig().getBoolean("betterMessageFormat");
             colorCommandNoPermission = getConfig().getString("colorCommandNoPermission");
             filteredWordReplacement = getConfig().getString("filteredWordReplacement");
             blockedMessageNotification = getConfig().getString("blockedMessageNotification");
+            defaultChatColor = getConfig().getString("defaultChatColor");
             filteredWords = getConfig().getStringList("filteredWords");
         } catch (Exception e) {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");

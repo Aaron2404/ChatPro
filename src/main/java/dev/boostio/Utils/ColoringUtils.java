@@ -26,12 +26,15 @@ public class ColoringUtils {
     }
 
     public static ChatColor convertColor(String chatColorName) {
-        if (chatColorName.contains("Default"))
+        chatColorName = chatColorName.toLowerCase();
+        if (chatColorName.contains("default"))
             return ChatColor.WHITE;
-        if (chatColorName.contains("Aqua"))
+        if (chatColorName.contains("gray"))
+            return ChatColor.GRAY;
+        if (chatColorName.contains("aqua"))
             return ChatColor.AQUA;
-        if (chatColorName.contains("Green"))
+        if (chatColorName.contains("green"))
             return ChatColor.GREEN;
-        return ChatColor.WHITE;
+        return ChatColor.GRAY;
     }
 }

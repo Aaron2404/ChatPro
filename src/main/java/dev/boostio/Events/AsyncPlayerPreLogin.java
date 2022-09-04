@@ -1,6 +1,7 @@
 package dev.boostio.Events;
 
 import dev.boostio.ChatPro;
+import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -17,6 +18,10 @@ public class AsyncPlayerPreLogin implements Listener {
 
         PlayerData playerData = new PlayerData();
         ChatPro.getInstance().getPlayerData().put(uuid, playerData);
-        ChatPro.getInstance().getPlayerData().get(uuid).setChatColorName(ChatColor.WHITE);
+
+        ChatColor defaultColor = ColoringUtils.convertColor(ChatPro.defaultChatColor);
+
+        //Set default chat color.
+        ChatPro.getInstance().getPlayerData().get(uuid).setChatColorName(defaultColor);
     }
 }

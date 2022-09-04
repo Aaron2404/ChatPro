@@ -62,11 +62,20 @@ public class NameColor implements CommandExecutor {
         greenColorMD.setLore(greenLore);
         greenColor.setItemMeta(greenColorMD);
 
+        ItemStack grayColor = new ItemStack(Material.WOOL, 1, (short) 8);
+        ItemMeta grayColorMD = grayColor.getItemMeta();
+        grayColorMD.setDisplayName(ChatColor.GRAY + "Gray");
+        ArrayList<String> grayLore = new ArrayList<>();
+        greenLore.add(ChatColor.BLUE + "Click to select color");
+        grayColorMD.setLore(grayLore);
+        grayColor.setItemMeta(grayColorMD);
+
 
         // Add Items to the class menu
         colorSelectionMenu.setItem(0, defaultColor);
-        colorSelectionMenu.setItem(1, lightBlueColor);
-        colorSelectionMenu.setItem(2, greenColor);
+        colorSelectionMenu.setItem(1, grayColor);
+        colorSelectionMenu.setItem(2, lightBlueColor);
+        colorSelectionMenu.setItem(3, greenColor);
 
         return false;
     }

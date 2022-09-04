@@ -9,6 +9,11 @@
 #enable colorCodes in player messages
 colorCodes: true
 
+#Changes the format of a player message: "Player:" instead of "<Player>".
+betterMessageFormat: true
+#Allow you to set any default chat color that can be chosen in the /color command.
+defaultChatColor: "default"
+
 #The message that gets sent if the player doesn't have permission to execute the command
 #Note: ColorCodes are supported in the message.
 colorCommandNoPermission: "You do not have permission to execute this command."
