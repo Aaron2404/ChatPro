@@ -58,8 +58,9 @@ public final class ChatPro extends JavaPlugin {
             Bukkit.getLogger().warning("Something went wrong while getting the settings from the config file");
         }
 
-        if(replaceWordInMessage && blockMessage){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "You cannot have both replaceWordInMessage and blockMessage enabled, this will result in the messages just being blocked if you want them to be replaced: \n turn off blockMessage in the config.yml");
+        if (replaceWordInMessage && blockMessage) {
+            Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.RED + "You cannot have both replaceWordInMessage and blockMessage enabled, this will result in the messages just being blocked if you want them to be replaced: \n turn off blockMessage in the config.yml");
+            replaceWordInMessage = false;
         }
 
         //Events
