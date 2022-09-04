@@ -31,8 +31,6 @@ public class AsyncPlayerChat implements Listener {
         ChatColor chatColor = data.getChatColorName();
         String format =  "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
 
-        player.sendMessage(String.valueOf(ChatPro.betterMessageFormat));
-
         if(ChatPro.betterMessageFormat){
             format = chatColor + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage();
         }
@@ -57,7 +55,7 @@ public class AsyncPlayerChat implements Listener {
                 if (ipFound) {
                     if (ChatPro.blockMessage) {
                         event.setCancelled(true);
-                        player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!" + IPv4ValidatorRegex.ipMessage);
+                        player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
                         return;
                     }
                     if (ChatPro.replaceWordInMessage) {
