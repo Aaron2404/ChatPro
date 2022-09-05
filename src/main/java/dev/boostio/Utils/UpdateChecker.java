@@ -13,6 +13,7 @@ import java.net.URLConnection;
 
 public class UpdateChecker {
     private static final String prefix = ChatColor.GRAY + "[" + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "Crasher" + ChatColor.GRAY + "] ";
+
     public static void checkForUpdate() {
         Bukkit.getScheduler().runTaskAsynchronously(ChatPro.getInstance(), () -> {
             String version = ChatPro.getInstance().getDescription().getVersion();

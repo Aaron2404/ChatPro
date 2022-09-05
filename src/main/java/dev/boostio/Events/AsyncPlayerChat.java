@@ -29,9 +29,9 @@ public class AsyncPlayerChat implements Listener {
 
         PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
         ChatColor chatColor = data.getChatColorName();
-        String format =  "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
+        String format = "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
 
-        if(ChatPro.betterMessageFormat){
+        if (ChatPro.betterMessageFormat) {
             format = chatColor + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage();
         }
 
