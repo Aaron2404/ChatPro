@@ -39,16 +39,11 @@ public class NameColor implements CommandExecutor {
         player.openInventory(colorSelectionMenu);
         player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
 
-        ItemStack defaultColor = CreateColorItem(NameColorEnum.Default, ChatColor.WHITE, 0);
-        ItemStack lightBlueColor = CreateColorItem(NameColorEnum.Aqua, ChatColor.AQUA, 3);
-        ItemStack greenColor = CreateColorItem(NameColorEnum.Green, ChatColor.GREEN, 5);
-        ItemStack grayColor = CreateColorItem(NameColorEnum.Gray, ChatColor.GRAY, 8);
-
         // Add Items to the class menu
-        colorSelectionMenu.setItem(0, defaultColor);
-        colorSelectionMenu.setItem(1, grayColor);
-        colorSelectionMenu.setItem(2, lightBlueColor);
-        colorSelectionMenu.setItem(3, greenColor);
+        colorSelectionMenu.setItem(0, CreateColorItem(NameColorEnum.Default, ChatColor.WHITE, 0));
+        colorSelectionMenu.setItem(1, CreateColorItem(NameColorEnum.Aqua, ChatColor.AQUA, 3));
+        colorSelectionMenu.setItem(2, CreateColorItem(NameColorEnum.Green, ChatColor.GREEN, 5));
+        colorSelectionMenu.setItem(3, CreateColorItem(NameColorEnum.Gray, ChatColor.GRAY, 8));
 
         return false;
     }
