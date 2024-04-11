@@ -58,6 +58,7 @@ public final class ChatPro extends JavaPlugin {
 
         saveDefaultConfig();
 
+        // TODO: Fix a proper config manager.
         try {
             colorCodes = getConfig().getBoolean("colorCodes");
             blockMessage = getConfig().getBoolean("blockMessage");
@@ -79,6 +80,8 @@ public final class ChatPro extends JavaPlugin {
         }
 
         new StartupManager(this);
+
+        // TODO: Improve update checker.
         UpdateChecker.checkForUpdate();
 
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.GREEN + "Started ChatPro successfully!");

@@ -7,6 +7,7 @@ import co.aikar.commands.annotation.Default;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import dev.boostio.ChatPro;
+import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.NameColorEnum;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -44,13 +45,14 @@ public class NameColorCommand extends BaseCommand {
         //player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT, 1, 1);
 
         // Add Items to the class menu
-        colorSelectionMenu.setItem(0, CreateColorItem(NameColorEnum.Default, ChatColor.WHITE, 0));
-        colorSelectionMenu.setItem(1, CreateColorItem(NameColorEnum.Aqua, ChatColor.AQUA, 3));
-        colorSelectionMenu.setItem(2, CreateColorItem(NameColorEnum.Green, ChatColor.GREEN, 5));
-        colorSelectionMenu.setItem(3, CreateColorItem(NameColorEnum.Gray, ChatColor.GRAY, 8));
+        colorSelectionMenu.setItem(0, CreateColorItem(NameColorEnum.Default, 0));
+        colorSelectionMenu.setItem(1, CreateColorItem(NameColorEnum.Aqua,  3));
+        colorSelectionMenu.setItem(2, CreateColorItem(NameColorEnum.Green,  5));
+        colorSelectionMenu.setItem(3, CreateColorItem(NameColorEnum.Gray, 8));
     }
 
-    private ItemStack CreateColorItem(NameColorEnum nameColor, ChatColor chatColor, int woolVariant){
+    private ItemStack CreateColorItem(NameColorEnum nameColor, int woolVariant){
+        ChatColor chatColor = ColoringUtils.convertColor(nameColor.toString());
         ItemStack ColorItem = getColouredWool(chatColor, woolVariant);
         ItemMeta ColorItemMD = ColorItem.getItemMeta();
         ColorItemMD.setDisplayName(chatColor + nameColor.toString());

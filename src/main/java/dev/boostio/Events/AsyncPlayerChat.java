@@ -31,8 +31,6 @@ public class AsyncPlayerChat implements Listener {
         PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
         ChatColor chatColor = data.getChatColorName();
 
-        Bukkit.getLogger().warning(data.getChatColorName().toString());
-
         String format = "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
 
         if (ChatPro.betterMessageFormat) {
