@@ -18,17 +18,13 @@ public class InventoryClick implements Listener {
         Player player = (Player) event.getWhoClicked();
         InventoryView inventoryView = player.getOpenInventory();
 
-        if (!inventoryView.getTopInventory().getName().equals("Color Selector GUI"))
+        if (!inventoryView.getTitle().equals("Color Selector GUI"))
             return;
 
         event.setCancelled(true);
 
-        if (!event.getClickedInventory().getName().equals("Color Selector GUI"))
-            return;
-
         if (event.getCurrentItem() == null || event.getCurrentItem().getItemMeta() == null)
             return;
-
 
         String chatColorName = event.getCurrentItem().getItemMeta().getDisplayName();
         ChatColor chatColor = ColoringUtils.convertColor(chatColorName);
@@ -37,7 +33,7 @@ public class InventoryClick implements Listener {
         data.setChatColorName(chatColor);
 
         player.sendMessage("Selected color: " + chatColor + ChatColor.BOLD + chatColorName);
-        player.playSound(player.getLocation(), Sound.CLICK, 1, 1);
+        //player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT, 1, 1);
 
         player.closeInventory();
     }

@@ -1,13 +1,13 @@
 package dev.boostio;
 
-import dev.boostio.Commands.NameColor;
-import dev.boostio.Events.AsyncPlayerChat;
-import dev.boostio.Events.AsyncPlayerPreLogin;
-import dev.boostio.Events.InventoryClick;
-import dev.boostio.Events.PlayerQuit;
+import co.aikar.commands.PaperCommandManager;
+import com.github.retrooper.packetevents.PacketEvents;
 import dev.boostio.Utils.PlayerData;
 import dev.boostio.Utils.UpdateChecker;
+import dev.boostio.managers.StartupManager;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +30,8 @@ public final class ChatPro extends JavaPlugin {
     public static boolean replaceWordInMessage = false;
     public static boolean filterIPs = false;
     public static boolean betterMessageFormat = false;
+    private PaperCommandManager commandManager;
+    private BukkitAudiences adventure;
 
 
     public static List<String> filteredWords;
@@ -37,12 +39,21 @@ public final class ChatPro extends JavaPlugin {
     @Getter
     private static ChatPro instance;
     private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
-    String version = getDescription().getVersion();
 
+    @Override
+    public void onLoad() {
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings().reEncodeByDefault(false)
+                .checkForUpdates(false)
+                .bStats(true);
+
+        PacketEvents.getAPI().load();
+    }
 
     @Override
     public void onEnable() {
-
+        commandManager = new PaperCommandManager(this);
+        adventure = BukkitAudiences.create(this);
         instance = this;
 
         saveDefaultConfig();
@@ -67,22 +78,16 @@ public final class ChatPro extends JavaPlugin {
             replaceWordInMessage = false;
         }
 
-        //Events
-        getServer().getPluginManager().registerEvents(new AsyncPlayerPreLogin(), this);
-        getServer().getPluginManager().registerEvents(new AsyncPlayerChat(), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
-
-        //Commands
-        getCommand("color").setExecutor(new NameColor());
-
-        // Checking for updates
+        new StartupManager(this);
         UpdateChecker.checkForUpdate();
 
-        Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.GREEN + "Started ChatPro version " + ChatColor.RED + version + ChatColor.GREEN + " successfully!");
+        Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.GREEN + "Started ChatPro successfully!");
     }
 
     @Override
     public void onDisable() {
+        PacketEvents.getAPI().terminate();
+        adventure.close();
+        getLogger().info("Plugin has been uninitialized!");
     }
 }

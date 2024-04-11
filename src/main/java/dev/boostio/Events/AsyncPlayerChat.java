@@ -5,6 +5,7 @@ import dev.boostio.Utils.ColoringUtils;
 import dev.boostio.Utils.FormatTypes;
 import dev.boostio.Utils.IPv4ValidatorRegex;
 import dev.boostio.Utils.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,6 +30,9 @@ public class AsyncPlayerChat implements Listener {
 
         PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
         ChatColor chatColor = data.getChatColorName();
+
+        Bukkit.getLogger().warning(data.getChatColorName().toString());
+
         String format = "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
 
         if (ChatPro.betterMessageFormat) {
