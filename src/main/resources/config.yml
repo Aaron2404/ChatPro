@@ -6,6 +6,15 @@
 # | |____  | | | | | (_| | | |_    | |      | |    | (_) |
 #  \_____| |_| |_|  \__,_|  \__|   |_|      |_|     \___/
 
+update-checker:
+  enabled: true
+
+  # When an update is found, should it be printed to the console?
+  print-to-console: true
+
+  # When an update is found, should players with the permission "ChatPro.Notify" be notified?
+  notify-in-game: true
+
 colours:
   # Enable colorCodes in player messages
   enabled: true

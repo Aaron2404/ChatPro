@@ -3,13 +3,12 @@ package dev.boostio;
 import co.aikar.commands.PaperCommandManager;
 import com.github.retrooper.packetevents.PacketEvents;
 import dev.boostio.managers.ConfigManager;
+import dev.boostio.managers.UpdateManager;
 import dev.boostio.utils.PlayerData;
-import dev.boostio.utils.UpdateChecker;
 import dev.boostio.managers.StartupManager;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,10 +43,8 @@ public final class ChatPro extends JavaPlugin {
         adventure = BukkitAudiences.create(this);
         instance = this;
 
+        new UpdateManager(this);
         new StartupManager(this);
-
-        // TODO: Improve update checker.
-        UpdateChecker.checkForUpdate();
     }
 
     @Override

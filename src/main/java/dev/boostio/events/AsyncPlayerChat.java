@@ -13,12 +13,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.List;
+
 public class AsyncPlayerChat implements Listener {
-    private final ChatPro plugin;
     private final ConfigManager configManager;
 
     public AsyncPlayerChat(ChatPro plugin){
-        this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
     }
 
@@ -27,7 +27,7 @@ public class AsyncPlayerChat implements Listener {
         Player player = event.getPlayer();
 
         /// Replacing each char code in a message using the setColor Util.
-        if (configManager.getConfigurationOption(ConfigOption.COLOURS_ENABLED)) {
+        if (getColoursEnabled()) {
             if (player.hasPermission("chatpro.colors")) {
                 event.setMessage(ColoringUtils.setColor(event.getMessage()));
             }
@@ -41,7 +41,7 @@ public class AsyncPlayerChat implements Listener {
 
         String format = "<" + chatColor + player.getDisplayName() + ChatColor.WHITE + "> " + event.getMessage();
 
-        if (configManager.getConfigurationOption(ConfigOption.BETTER_MESSAGE_FORMAT)) {
+        if (getBetterMessageFormat()) {
             format = chatColor + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage();
         }
 
@@ -54,22 +54,22 @@ public class AsyncPlayerChat implements Listener {
         Player player = event.getPlayer();
 
         //Turn the list into an array.
-        Object[] filteredWords = configManager.getConfigurationOption(ConfigOption.FILTERED_WORDS);
+        Object[] filteredWords = getFilteredWords();
         String playerMessage = event.getMessage().toLowerCase();
-
         String[] splitWords = playerMessage.split(" ");
 
-        if (configManager.getConfigurationOption(ConfigOption.FILTER_IP)) {
+        if (getFilterIp()) {
             for (String separateWord : splitWords) {
                 boolean ipFound = IPv4ValidatorRegex.isValid(separateWord);
                 if (ipFound) {
-                    if (configManager.getConfigurationOption(ConfigOption.BLOCK_MESSAGE)) {
+                    if (getBlockMessage())
+                    {
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
                         return;
                     }
-                    if (configManager.getConfigurationOption(ConfigOption.REPLACE_WORD_IN_MESSAGE)) {
-                        String replacePlayerMessage = playerMessage.replace(IPv4ValidatorRegex.ipMessage, configManager.getConfigurationOption(ConfigOption.FILTERED_WORD_REPLACEMENT));
+                    if (getReplaceWordInMessage()) {
+                        String replacePlayerMessage = playerMessage.replace(IPv4ValidatorRegex.ipMessage, getFilteredWordReplacement());
                         event.setMessage(replacePlayerMessage);
                     }
                 }
@@ -81,15 +81,48 @@ public class AsyncPlayerChat implements Listener {
             CharSequence filteredWord = (CharSequence) word;
             String filterWordString = filteredWord.toString().toLowerCase();
             if (playerMessage.contains(filterWordString)) {
-                if (configManager.getConfigurationOption(ConfigOption.BLOCK_MESSAGE)) {
-                    player.sendMessage((String) configManager.getConfigurationOption(ConfigOption.BLOCKED_MESSAGE_NOTIFICATION));
+                if (getBlockMessage()) {
+                    player.sendMessage(getBlockedMessageNotification());
                     event.setCancelled(true);
                 }
-                if (configManager.getConfigurationOption(ConfigOption.REPLACE_WORD_IN_MESSAGE)) {
-                    String replacePlayerMessage = playerMessage.replace(filterWordString, configManager.getConfigurationOption(ConfigOption.FILTERED_WORD_REPLACEMENT));
+                if (getReplaceWordInMessage()) {
+                    String replacePlayerMessage = playerMessage.replace(filterWordString, getFilteredWordReplacement());
                     event.setMessage(replacePlayerMessage);
                 }
             }
         }
+    }
+
+    private String[] getFilteredWords() {
+        List<String> filteredWordsList = configManager.getConfigurationOption(ConfigOption.FILTERED_WORDS);
+        return filteredWordsList.toArray(new String[0]);
+    }
+
+    private boolean getFilterIp() {
+        return configManager.getConfigurationOption(ConfigOption.FILTER_IP);
+    }
+
+    private boolean getBlockMessage() {
+        return configManager.getConfigurationOption(ConfigOption.BLOCK_MESSAGE);
+    }
+
+    private boolean getReplaceWordInMessage() {
+        return configManager.getConfigurationOption(ConfigOption.REPLACE_WORD_IN_MESSAGE);
+    }
+
+    private String getFilteredWordReplacement() {
+        return configManager.getConfigurationOption(ConfigOption.FILTERED_WORD_REPLACEMENT);
+    }
+
+    private String getBlockedMessageNotification() {
+        return configManager.getConfigurationOption(ConfigOption.BLOCKED_MESSAGE_NOTIFICATION);
+    }
+
+    private boolean getBetterMessageFormat() {
+        return configManager.getConfigurationOption(ConfigOption.BETTER_MESSAGE_FORMAT);
+    }
+
+    private boolean getColoursEnabled() {
+        return configManager.getConfigurationOption(ConfigOption.COLOURS_ENABLED);
     }
 }
