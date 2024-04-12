@@ -7,6 +7,7 @@ import dev.boostio.utils.ColoringUtils;
 import dev.boostio.utils.FormatTypes;
 import dev.boostio.utils.IPv4ValidatorRegex;
 import dev.boostio.utils.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,10 +24,21 @@ public class AsyncPlayerChat implements Listener {
     }
 
     @EventHandler
-    public void onAsyncPlayerChatColourReplace(AsyncPlayerChatEvent event) {
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        /// Replacing each char code in a message using the setColor Util.
+        // Handle filter.
+        filterIPs(event, player);
+        filterWords(event, player);
+
+        // Handle colors and formats.
+        replaceColorsAndFormats(event, player);
+        formatMessage(event, player);
+    }
+
+
+
+    private void replaceColorsAndFormats(AsyncPlayerChatEvent event, Player player) {
         if (getColoursEnabled()) {
             if (player.hasPermission("chatpro.colors")) {
                 event.setMessage(ColoringUtils.setColor(event.getMessage()));
@@ -35,7 +47,9 @@ public class AsyncPlayerChat implements Listener {
                 event.setMessage(FormatTypes.setFormat(event.getMessage()));
             }
         }
+    }
 
+    private void formatMessage(AsyncPlayerChatEvent event, Player player) {
         PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
         ChatColor chatColor = data.getChatColorName();
 
@@ -45,16 +59,10 @@ public class AsyncPlayerChat implements Listener {
             format = chatColor + player.getDisplayName() + ChatColor.WHITE + ": " + event.getMessage();
         }
 
-        //Player name format
         event.setFormat(format);
     }
 
-    @EventHandler
-    public void onAsyncPlayerChatWordFilter(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-
-        //Turn the list into an array.
-        Object[] filteredWords = getFilteredWords();
+    private void filterIPs(AsyncPlayerChatEvent event, Player player) {
         String playerMessage = event.getMessage().toLowerCase();
         String[] splitWords = playerMessage.split(" ");
 
@@ -75,16 +83,20 @@ public class AsyncPlayerChat implements Listener {
                 }
             }
         }
+    }
 
-        //Simple for loop to check if the message sent by the player contains a word that on the filter list.
-        for (Object word : filteredWords) {
-            CharSequence filteredWord = (CharSequence) word;
-            String filterWordString = filteredWord.toString().toLowerCase();
+    private void filterWords(AsyncPlayerChatEvent event, Player player) {
+        String[] filteredWords = getFilteredWords();
+        String playerMessage = event.getMessage().toLowerCase();
+
+        for (String word : filteredWords) {
+            String filterWordString = word.toLowerCase();
             if (playerMessage.contains(filterWordString)) {
                 if (getBlockMessage()) {
                     player.sendMessage(getBlockedMessageNotification());
                     event.setCancelled(true);
                 }
+
                 if (getReplaceWordInMessage()) {
                     String replacePlayerMessage = playerMessage.replace(filterWordString, getFilteredWordReplacement());
                     event.setMessage(replacePlayerMessage);
