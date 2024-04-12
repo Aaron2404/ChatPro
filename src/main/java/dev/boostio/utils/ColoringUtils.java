@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 public class ColoringUtils {
 
     // Replace '&'with the '§' chat code symbol.
-    public static String setColor(String output) {
+    public static String setFormatting(String output) {
         return output.replace("&", "§");
     }
 

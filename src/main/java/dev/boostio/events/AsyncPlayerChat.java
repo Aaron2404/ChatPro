@@ -4,7 +4,6 @@ import dev.boostio.ChatPro;
 import dev.boostio.enums.ConfigOption;
 import dev.boostio.managers.ConfigManager;
 import dev.boostio.utils.ColoringUtils;
-import dev.boostio.utils.FormatTypes;
 import dev.boostio.utils.IPv4ValidatorRegex;
 import dev.boostio.utils.PlayerData;
 import org.bukkit.ChatColor;
@@ -14,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AsyncPlayerChat implements Listener {
     private final ConfigManager configManager;
@@ -51,10 +51,10 @@ public class AsyncPlayerChat implements Listener {
     private void replaceColorsAndFormats(AsyncPlayerChatEvent event, Player player) {
         if (configManager.getConfigurationOption(ConfigOption.COLOURS_ENABLED)) {
             if (player.hasPermission("chatpro.colors")) {
-                event.setMessage(ColoringUtils.setColor(event.getMessage()));
+                event.setMessage(ColoringUtils.setFormatting(event.getMessage()));
             }
             if (player.hasPermission("chatpro.formats")) {
-                event.setMessage(FormatTypes.setFormat(event.getMessage()));
+                event.setMessage(ColoringUtils.setFormatting(event.getMessage()));
             }
         }
     }
@@ -111,23 +111,28 @@ public class AsyncPlayerChat implements Listener {
      * @param player The Player instance.
      */
     private void filterWords(AsyncPlayerChatEvent event, Player player) {
-        String[] filteredWords = getFilteredWords();
         String playerMessage = event.getMessage().toLowerCase();
+        String replacement = getFilteredWordReplacement();
 
-        for (String word : filteredWords) {
+        for (String word : getFilteredWords()) {
             String filterWordString = word.toLowerCase();
-            if (playerMessage.contains(filterWordString)) {
+            String spacedFilterWord = filterWordString.chars()
+                    .mapToObj(c -> String.valueOf((char) c))
+                    .collect(Collectors.joining(" "));
+
+            if (playerMessage.contains(filterWordString) || playerMessage.contains(spacedFilterWord)) {
                 if (getBlockMessage()) {
                     player.sendMessage(ChatColor.RED + getBlockedMessageNotification());
                     event.setCancelled(true);
+                    return;
                 }
 
-                if (getReplaceWordInMessage()) {
-                    String replacePlayerMessage = playerMessage.replace(filterWordString, getFilteredWordReplacement());
-                    event.setMessage(replacePlayerMessage);
-                }
+                playerMessage = playerMessage.replace(filterWordString, replacement);
+                playerMessage = playerMessage.replace(spacedFilterWord, replacement);
             }
         }
+
+        event.setMessage(playerMessage);
     }
 
     /**
