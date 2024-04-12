@@ -6,6 +6,7 @@ import dev.boostio.managers.ConfigManager;
 import dev.boostio.managers.UpdateManager;
 import dev.boostio.utils.PlayerData;
 import dev.boostio.managers.StartupManager;
+import io.github.retrooper.packetevents.bstats.Metrics;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -45,6 +46,8 @@ public final class ChatPro extends JavaPlugin {
 
         new UpdateManager(this);
         new StartupManager(this);
+
+        enableBStats();
     }
 
     @Override
@@ -52,5 +55,13 @@ public final class ChatPro extends JavaPlugin {
         PacketEvents.getAPI().terminate();
         adventure.close();
         getLogger().info("Plugin has been uninitialized!");
+    }
+
+    private void enableBStats() {
+        try {
+            new Metrics(this, 21576);
+        } catch (Exception e) {
+            getLogger().warning("Something went wrong while enabling bStats.\n" + e.getMessage());
+        }
     }
 }
