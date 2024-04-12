@@ -1,4 +1,4 @@
-package dev.boostio.Commands;
+package dev.boostio.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -7,13 +7,12 @@ import co.aikar.commands.annotation.Default;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import dev.boostio.ChatPro;
-import dev.boostio.Utils.ColoringUtils;
-import dev.boostio.Utils.NameColorEnum;
+import dev.boostio.utils.ColoringUtils;
+import dev.boostio.enums.NameColorEnum;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

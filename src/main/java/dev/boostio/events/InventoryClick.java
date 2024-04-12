@@ -1,10 +1,9 @@
-package dev.boostio.Events;
+package dev.boostio.events;
 
 import dev.boostio.ChatPro;
-import dev.boostio.Utils.ColoringUtils;
-import dev.boostio.Utils.PlayerData;
+import dev.boostio.utils.ColoringUtils;
+import dev.boostio.utils.PlayerData;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

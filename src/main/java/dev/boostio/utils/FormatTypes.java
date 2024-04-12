@@ -1,4 +1,4 @@
-package dev.boostio.Utils;
+package dev.boostio.utils;
 
 public class FormatTypes {
     // Replace '&'with the '§' chat code symbol.

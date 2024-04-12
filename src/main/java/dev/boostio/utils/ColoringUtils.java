@@ -1,5 +1,6 @@
-package dev.boostio.Utils;
+package dev.boostio.utils;
 
+import dev.boostio.enums.NameColorEnum;
 import org.bukkit.ChatColor;
 
 public class ColoringUtils {
