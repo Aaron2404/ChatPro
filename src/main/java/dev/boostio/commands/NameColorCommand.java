@@ -13,6 +13,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -20,15 +21,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @CommandAlias("namecolor|nc")
 @CommandPermission("chatpro.colorcodes")
 public class NameColorCommand extends BaseCommand {
-    private final Inventory colorSelectionMenu = Bukkit.createInventory(null, 9, "Color Selector GUI");
+    public static String colorSelectionTitle = "Color Selector GUI";
+    private final Inventory colorSelectionMenu = Bukkit.createInventory(null, 9, colorSelectionTitle);
     private final BukkitAudiences adventure;
+    private List<ItemStack> colorItems = new ArrayList<>();
 
     public NameColorCommand(ChatPro plugin) {
         this.adventure = plugin.getAdventure();
+
+        initializeInventory();
     }
 
     @Default
@@ -39,41 +46,60 @@ public class NameColorCommand extends BaseCommand {
         }
 
         Player player = (Player) sender;
-
         player.openInventory(colorSelectionMenu);
-        //player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT, 1, 1);
-
-        // Add Items to the class menu
-        colorSelectionMenu.setItem(0, CreateColorItem(NameColorEnum.Default, 0));
-        colorSelectionMenu.setItem(1, CreateColorItem(NameColorEnum.Aqua,  3));
-        colorSelectionMenu.setItem(2, CreateColorItem(NameColorEnum.Green,  5));
-        colorSelectionMenu.setItem(3, CreateColorItem(NameColorEnum.Gray, 8));
     }
 
-    private ItemStack CreateColorItem(NameColorEnum nameColor, int woolVariant){
+     /**
+      * Creates an ItemStack representing a color.
+      * @param nameColor The color to create an ItemStack for.
+      * @param woolVariant The wool variant to use for the ItemStack.
+      * @return The ItemStack representing the color.
+      */
+    private ItemStack createColorItem(NameColorEnum nameColor, int woolVariant){
         ChatColor chatColor = ColoringUtils.convertColor(nameColor.toString());
-        ItemStack ColorItem = getColouredWool(chatColor, woolVariant);
-        ItemMeta ColorItemMD = ColorItem.getItemMeta();
-        ColorItemMD.setDisplayName(chatColor + nameColor.toString());
-        ArrayList<String> defaultLore = new ArrayList<>();
-        defaultLore.add(ChatColor.BLUE + "Click to select color");
-        ColorItemMD.setLore(defaultLore);
-        ColorItem.setItemMeta(ColorItemMD);
-        return ColorItem;
+        ItemStack colorItem = getColouredWool(chatColor, woolVariant);
+        ItemMeta colorItemMeta = colorItem.getItemMeta();
+
+        colorItemMeta.setDisplayName(chatColor + nameColor.toString());
+        colorItemMeta.setLore(Arrays.asList(ChatColor.BLUE + "Click to select color"));
+
+        colorItem.setItemMeta(colorItemMeta);
+        return colorItem;
     }
 
+
+    /**
+     * Creates an ItemStack representing a colored wool block.
+     * @param chatColor The color of the wool block.
+     * @param woolVariant The wool variant to use for the ItemStack.
+     * @return The ItemStack representing the colored wool block.
+     */
     private ItemStack getColouredWool(ChatColor chatColor, int woolVariant){
-        ServerVersion serverVersion = PacketEvents.getAPI().getServerManager().getVersion();
-        Material woolMaterial;
-        try {
-            if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_13_1)) {
+        Material woolMaterial = Material.valueOf("WOOL"); // Default to legacy wool if the color is not found
+        if (PacketEvents.getAPI().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_13_1)) {
+            try {
                 woolMaterial = Material.valueOf(chatColor.name() + "_WOOL");
-            } else {
-                return new ItemStack(Material.valueOf("WOOL"), 1, (short) woolVariant);
-            }
-        } catch (IllegalArgumentException e) {
-            woolMaterial = Material.WHITE_WOOL; // Default to white wool if the color is not found
+            } catch (IllegalArgumentException ignored) {}
+        } else {
+            return new ItemStack(Material.valueOf("WOOL"), 1, (short) woolVariant);
         }
         return new ItemStack(woolMaterial, 1);
+    }
+
+    /**
+     * Initializes the color selection inventory with ItemStacks representing different colors.
+     * This method is called once during the command initialization to prevent it from being called each time the command is executed.
+     * It creates ItemStacks for each color and adds them to the color selection inventory.
+     */
+    private void initializeInventory() {
+        List<ItemStack> colorItems = new ArrayList<>();
+        colorItems.add(createColorItem(NameColorEnum.Default, 0));
+        colorItems.add(createColorItem(NameColorEnum.Aqua,  3));
+        colorItems.add(createColorItem(NameColorEnum.Green,  5));
+        colorItems.add(createColorItem(NameColorEnum.Gray, 8));
+
+        for (int i = 0; i < colorItems.size(); i++) {
+            colorSelectionMenu.setItem(i, colorItems.get(i));
+        }
     }
 }

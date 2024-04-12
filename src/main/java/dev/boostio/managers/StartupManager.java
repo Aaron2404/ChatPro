@@ -50,6 +50,6 @@ public class StartupManager {
         plugin.getServer().getPluginManager().registerEvents(new AsyncPlayerPreLogin(this.plugin), this.plugin);
         plugin.getServer().getPluginManager().registerEvents(new AsyncPlayerChat(this.plugin), this.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerQuit(), this.plugin);
-        plugin.getServer().getPluginManager().registerEvents(new InventoryClick(), this.plugin);
+        plugin.getServer().getPluginManager().registerEvents(new InventoryClick(this.plugin), this.plugin);
     }
 }
