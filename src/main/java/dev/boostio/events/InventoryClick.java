@@ -2,7 +2,6 @@ package dev.boostio.events;
 
 import dev.boostio.ChatPro;
 import dev.boostio.managers.ColorManager;
-import dev.boostio.utils.ColoringUtils;
 import dev.boostio.utils.PlayerData;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
@@ -17,9 +16,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryClick implements Listener {
     private final BukkitAudiences adventure;
+    private final ColorManager colorManager;
 
     public InventoryClick(ChatPro plugin) {
         this.adventure = plugin.getAdventure();
+        this.colorManager = plugin.getColorManager();
     }
 
     /**
@@ -40,7 +41,7 @@ public class InventoryClick implements Listener {
         if (currentItem == null || currentItem.getItemMeta() == null) return;
 
         String chatColorName = ChatColor.stripColor(currentItem.getItemMeta().getDisplayName());
-        ChatColor chatColor = ColoringUtils.convertColor(chatColorName);
+        ChatColor chatColor = this.colorManager.convertColor(chatColorName);
         setPlayerChatColor(player, chatColor);
 
         Component csComponent = Component.text("Selected color: ")

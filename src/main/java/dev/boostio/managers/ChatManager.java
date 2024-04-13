@@ -2,18 +2,20 @@ package dev.boostio.managers;
 
 import dev.boostio.ChatPro;
 import dev.boostio.enums.ConfigOption;
-import dev.boostio.utils.ColoringUtils;
-import dev.boostio.utils.IPv4ValidatorRegex;
 import dev.boostio.utils.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ChatManager {
     private final ConfigManager configManager;
+    private final String IPV4_PATTERN = "^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\\.(?!$)|$)){4}$";
+    private final Pattern pattern = Pattern.compile(IPV4_PATTERN);
 
     public ChatManager(ChatPro plugin){
         this.configManager = plugin.getConfigManager();
@@ -44,10 +46,10 @@ public class ChatManager {
     private void replaceColorsAndFormats(AsyncPlayerChatEvent event, Player player) {
         if (configManager.getConfigurationOption(ConfigOption.COLOURS_ENABLED)) {
             if (player.hasPermission("chatpro.colors")) {
-                event.setMessage(ColoringUtils.setFormatting(event.getMessage()));
+                event.setMessage(setFormatting(event.getMessage()));
             }
             if (player.hasPermission("chatpro.formats")) {
-                event.setMessage(ColoringUtils.setFormatting(event.getMessage()));
+                event.setMessage(setFormatting(event.getMessage()));
             }
         }
     }
@@ -70,6 +72,11 @@ public class ChatManager {
         event.setFormat(format);
     }
 
+    // Replace '&'with the '§' chat code symbol.
+    public static String setFormatting(String output) {
+        return output.replace("&", "§");
+    }
+
     /**
      * Filters IPs in the player's message.
      * @param event The AsyncPlayerChatEvent instance.
@@ -78,7 +85,7 @@ public class ChatManager {
     private void filterIPs(AsyncPlayerChatEvent event, Player player) {
         if (configManager.getConfigurationOption(ConfigOption.FILTER_IP)) {
             for (String word : event.getMessage().toLowerCase().split(" ")) {
-                if (IPv4ValidatorRegex.isValid(word)) {
+                if (IsIpv4Address(word)) {
                     if (getBlockMessage()) {
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
@@ -122,6 +129,11 @@ public class ChatManager {
         event.setMessage(playerMessage);
     }
 
+    private boolean IsIpv4Address(final String message) {
+        Matcher matcher = pattern.matcher(message);
+        return matcher.matches();
+    }
+
     /**
      * Returns the list of filtered words.
      * @return An array of filtered words.
@@ -154,5 +166,4 @@ public class ChatManager {
     private String getBlockedMessageNotification() {
         return configManager.getConfigurationOption(ConfigOption.BLOCKED_MESSAGE_NOTIFICATION);
     }
-
 }

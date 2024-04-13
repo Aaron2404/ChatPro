@@ -2,9 +2,7 @@ package dev.boostio.managers;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
-import dev.boostio.ChatPro;
 import dev.boostio.enums.NameColorEnum;
-import dev.boostio.utils.ColoringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,7 +33,7 @@ public class ColorManager {
      * @return The ItemStack representing the color.
      */
     private ItemStack createColorItem(NameColorEnum nameColor, int woolVariant){
-        ChatColor chatColor = ColoringUtils.convertColor(nameColor.toString());
+        ChatColor chatColor = convertColor(nameColor.toString());
         ItemStack colorItem = getColouredWool(chatColor, woolVariant);
         ItemMeta colorItemMeta = colorItem.getItemMeta();
 
@@ -63,6 +61,18 @@ public class ColorManager {
             return new ItemStack(Material.valueOf("WOOL"), 1, (short) woolVariant);
         }
         return new ItemStack(woolMaterial, 1);
+    }
+
+    public ChatColor convertColor(String chatColorName) {
+        if (chatColorName.equals(NameColorEnum.Default.toString()))
+            return ChatColor.WHITE;
+        if (chatColorName.contains(NameColorEnum.Gray.toString()))
+            return ChatColor.GRAY;
+        if (chatColorName.contains(NameColorEnum.Aqua.toString()))
+            return ChatColor.AQUA;
+        if (chatColorName.contains(NameColorEnum.Green.toString()))
+            return ChatColor.GREEN;
+        return ChatColor.GRAY;
     }
 
     /**
