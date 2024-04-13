@@ -12,8 +12,9 @@ A minecraft plugin that allows you to add colors to your messages by including a
 - Update Checker
 
 ## Permissions
-- ```chatpro.colorcodes``` Allow players to use colors.
-- ```chatpro.formats``` Allows players to use formatting
+- ```chatpro.namecolor``` Allow players to change the color of their name.
+- ```chatpro.colors``` Allow players to use color in their chat messages.
+- ```chatpro.formats``` Allows players to use formatting in their messages.
 
 ## Tested Versions
 1.8 And above.
