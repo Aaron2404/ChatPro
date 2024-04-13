@@ -1,4 +1,4 @@
-package dev.boostio.Utils;
+package dev.boostio.enums;
 
 public enum NameColorEnum {
     Default,

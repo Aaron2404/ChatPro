@@ -1,4 +1,4 @@
-package dev.boostio.Utils;
+package dev.boostio.utils;
 
 import lombok.Getter;
 import lombok.Setter;

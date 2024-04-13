@@ -1,6 +1,23 @@
 name: ChatPro
-version: '${project.version}'
+author: Aaron
+description: ChatPro is a plugin which manages certain chat features.
+version: '2.0.0'
 main: dev.boostio.ChatPro
-
-commands:
-  color:
+api-version: '1.13'
+permissions:
+  chatpro.namecolor:
+    description: "Allow the player to change the colour of their name"
+    default: op
+  chatpro.colors:
+    description: "Allow a player to use color codes in their messages"
+    default: op
+  chatpro.formats:
+    description: "Allow a player to use format codes in their messages"
+    default: op
+softdepend:
+  - ProtocolLib
+  - ProtocolSupport
+  - ViaVersion
+  - ViaBackwards
+  - ViaRewind
+  - Geyser-Spigot

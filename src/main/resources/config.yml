@@ -6,29 +6,42 @@
 # | |____  | | | | | (_| | | |_    | |      | |    | (_) |
 #  \_____| |_| |_|  \__,_|  \__|   |_|      |_|     \___/
 
-#enable colorCodes in player messages
-colorCodes: true
+update-checker:
+  enabled: true
 
-#Changes the format of a player message: "Player:" instead of "<Player>".
-betterMessageFormat: true
-#Allow you to set any default chat color that can be chosen in the /color command.
-defaultChatColor: "default"
+  # When an update is found, should it be printed to the console?
+  print-to-console: true
 
-#The message that gets sent if the player doesn't have permission to execute the command
-#Note: ColorCodes are supported in the message.
-colorCommandNoPermission: "You do not have permission to execute this command."
+  # When an update is found, should players with the permission "ChatPro.Notify" be notified?
+  notify-in-game: true
 
-#List of stings that will be filtered by the plugin.
-filteredWords: ['Fuck', 'Shit', 'Retard', 'Boostio is not epic']
-filterIPs: true
+colours:
+  # Enable colorCodes in player messages
+  enabled: true
 
-#Blocks any message that contains a filtered word.
-blockMessage: false
-blockedMessageNotification: "Your message contained a filtered word, and it has been canceled."
+  # Allow you to set any default chat color that can be chosen in the /color command.
+  default-chat-color: "default"
 
-#Replace the filtered word instead of blocking the entire message.
-replaceWordInMessage: true
-filteredWordReplacement: "*"
+  # The message that gets sent if the player doesn't have permission to execute the command
+  # Note: ColorCodes are supported in the message.
+  color-command-no-permission: "You do not have permission to execute this command."
+
+format:
+  # Changes the format of a player message: "Player:" instead of "<Player>".
+  better-message-format: true
+
+censoring:
+  # List of stings that will be filtered by the plugin.
+  filtered-words: ['Fuck', 'Shit', 'ChatPro is bad']
+  filter-ip: true
+
+  # Blocks any message that contains a filtered word.
+  block-message: false
+  blocked-message-notification: "Your message contained a filtered word, and it has been canceled."
+
+  # Replace the filtered word instead of blocking the entire message.
+  replace-word-in-message: true
+  filtered-word-replacement: "*"
 
 
 
