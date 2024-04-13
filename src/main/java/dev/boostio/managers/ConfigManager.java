@@ -30,4 +30,8 @@ public class ConfigManager {
     public <T> T getConfigurationOption(ConfigOption option) {
         return (T) configurationOptions.get(option);
     }
+
+    public boolean getBoolean(ConfigOption option) {
+        return (boolean) configurationOptions.get(option);
+    }
 }

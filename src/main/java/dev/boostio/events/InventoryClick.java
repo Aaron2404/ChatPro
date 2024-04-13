@@ -2,7 +2,6 @@ package dev.boostio.events;
 
 import dev.boostio.ChatPro;
 import dev.boostio.managers.ColorManager;
-import dev.boostio.utils.PlayerData;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -58,7 +57,6 @@ public class InventoryClick implements Listener {
      * @param chatColor The chat color to set.
      */
     private void setPlayerChatColor(Player player, ChatColor chatColor) {
-        PlayerData data = ChatPro.getInstance().getPlayerData().get(player.getUniqueId());
-        data.setChatColorName(chatColor);
+        ChatPro.getInstance().getPlayerData().get(player.getUniqueId()).setChatColorName(chatColor);
     }
 }

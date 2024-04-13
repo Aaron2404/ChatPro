@@ -1,4 +1,3 @@
-
 #   _____   _               _       _____
 #  / ____| | |             | |     |  __ \
 # | |      | |__     __ _  | |_    | |__) |  _ __    ___
@@ -32,7 +31,7 @@ format:
 
 censoring:
   # List of stings that will be filtered by the plugin.
-  filtered-words: ['Fuck', 'Shit', 'ChatPro is bad']
+  filtered-words: [ 'Fuck', 'Shit', 'ChatPro is bad' ]
   filter-ip: true
 
   # Blocks any message that contains a filtered word.
