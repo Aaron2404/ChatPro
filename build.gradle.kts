@@ -42,12 +42,12 @@ tasks {
         minimize()
         archiveFileName.set("${project.name}-${project.version}.jar")
 
-        relocate("io.github.retrooper.packetevents", "com.deathmotion.playercrasher.shaded.io.github.retrooper.packetevents")
-        relocate("com.github.retrooper.packetevents", "com.deathmotion.playercrasher.shaded.com.github.retrooper.packetevents")
-        relocate("net.kyori", "com.deathmotion.playercrasher.shaded.kyori")
-        relocate("co.aikar.commands", "com.deathmotion.playercrasher.shaded.acf")
-        relocate("co.aikar.locales", "com.deathmotion.playercrasher.shaded.locales")
-        relocate("com.google.gson", "com.deathmotion.playercrasher.shaded.gson")
+        relocate("io.github.retrooper.packetevents", "dev.boostio.chatpro.shaded.io.github.retrooper.packetevents")
+        relocate("com.github.retrooper.packetevents", "dev.boostio.chatpro.shaded.com.github.retrooper.packetevents")
+        relocate("net.kyori", "dev.boostio.chatpro.shaded.kyori")
+        relocate("co.aikar.commands", "dev.boostio.chatpro.shaded.acf")
+        relocate("co.aikar.locales", "dev.boostio.chatpro.shaded.locales")
+        relocate("com.google.gson", "dev.boostio.chatpro.shaded.gson")
     }
 
     runServer {

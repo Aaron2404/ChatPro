@@ -2,16 +2,12 @@ package dev.boostio;
 
 import co.aikar.commands.PaperCommandManager;
 import com.github.retrooper.packetevents.PacketEvents;
-import dev.boostio.managers.ChatManager;
-import dev.boostio.managers.ConfigManager;
-import dev.boostio.managers.UpdateManager;
+import dev.boostio.managers.*;
 import dev.boostio.utils.PlayerData;
-import dev.boostio.managers.StartupManager;
 import io.github.retrooper.packetevents.bstats.Metrics;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -19,9 +15,9 @@ import java.util.UUID;
 
 @Getter
 public final class ChatPro extends JavaPlugin {
-    public static String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + "ChatPro" + ChatColor.GRAY + "] ";
     private ConfigManager configManager;
     private ChatManager chatManager;
+    private ColorManager colorManager;
 
     private PaperCommandManager commandManager;
     private BukkitAudiences adventure;
@@ -45,6 +41,7 @@ public final class ChatPro extends JavaPlugin {
         configManager = new ConfigManager(this);
         commandManager = new PaperCommandManager(this);
         chatManager = new ChatManager(this);
+        colorManager = new ColorManager();
         adventure = BukkitAudiences.create(this);
         instance = this;
 

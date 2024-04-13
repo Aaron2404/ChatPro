@@ -1,18 +1,17 @@
 package dev.boostio.events;
 
 import dev.boostio.ChatPro;
-import dev.boostio.commands.NameColorCommand;
+import dev.boostio.managers.ColorManager;
 import dev.boostio.utils.ColoringUtils;
 import dev.boostio.utils.PlayerData;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -22,7 +21,6 @@ public class InventoryClick implements Listener {
     public InventoryClick(ChatPro plugin) {
         this.adventure = plugin.getAdventure();
     }
-
 
     /**
      * Event handler for the InventoryClickEvent.
@@ -34,23 +32,21 @@ public class InventoryClick implements Listener {
     @EventHandler
     public void onColorSelect(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        InventoryView inventoryView = player.getOpenInventory();
-
-        if (!inventoryView.getTitle().equals(NameColorCommand.colorSelectionTitle)) return;
+        if (!player.getOpenInventory().getTitle().equals(ColorManager.colorSelectionTitle)) return;
 
         event.setCancelled(true);
 
         ItemStack currentItem = event.getCurrentItem();
         if (currentItem == null || currentItem.getItemMeta() == null) return;
 
-        String chatColorName = currentItem.getItemMeta().getDisplayName();
+        String chatColorName = ChatColor.stripColor(currentItem.getItemMeta().getDisplayName());
         ChatColor chatColor = ColoringUtils.convertColor(chatColorName);
-
         setPlayerChatColor(player, chatColor);
 
-        adventure.sender(player).sendMessage(Component.text("Selected color: ")
-                 .append(Component.text(chatColor + chatColorName)
-                 .decoration(TextDecoration.BOLD, true)));
+        Component csComponent = Component.text("Selected color: ")
+                .append(Component.text(chatColorName, NamedTextColor.NAMES.value(chatColor.name().toLowerCase())));
+
+        adventure.sender(player).sendMessage(csComponent);
         player.closeInventory();
     }
 
