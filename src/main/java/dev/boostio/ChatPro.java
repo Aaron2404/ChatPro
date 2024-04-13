@@ -2,6 +2,7 @@ package dev.boostio;
 
 import co.aikar.commands.PaperCommandManager;
 import com.github.retrooper.packetevents.PacketEvents;
+import dev.boostio.managers.ChatManager;
 import dev.boostio.managers.ConfigManager;
 import dev.boostio.managers.UpdateManager;
 import dev.boostio.utils.PlayerData;
@@ -20,6 +21,8 @@ import java.util.UUID;
 public final class ChatPro extends JavaPlugin {
     public static String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + "ChatPro" + ChatColor.GRAY + "] ";
     private ConfigManager configManager;
+    private ChatManager chatManager;
+
     private PaperCommandManager commandManager;
     private BukkitAudiences adventure;
 
@@ -41,6 +44,7 @@ public final class ChatPro extends JavaPlugin {
     public void onEnable() {
         configManager = new ConfigManager(this);
         commandManager = new PaperCommandManager(this);
+        chatManager = new ChatManager(this);
         adventure = BukkitAudiences.create(this);
         instance = this;
 
