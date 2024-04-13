@@ -17,12 +17,18 @@ public class ChatManager {
     private final String IPV4_PATTERN = "^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\\.(?!$)|$)){4}$";
     private final Pattern pattern = Pattern.compile(IPV4_PATTERN);
 
-    public ChatManager(ChatPro plugin){
+    public ChatManager(ChatPro plugin) {
         this.configManager = plugin.getConfigManager();
+    }
+
+    // Replace '&'with the '§' chat code symbol.
+    public static String setFormatting(String output) {
+        return output.replace("&", "§");
     }
 
     /**
      * Handles the player's chat message.
+     *
      * @param event The AsyncPlayerChatEvent instance.
      */
     public void handleChat(AsyncPlayerChatEvent event) {
@@ -37,14 +43,14 @@ public class ChatManager {
         formatMessage(event, player);
     }
 
-
     /**
      * Replaces colors and formats in the player's message.
-     * @param event The AsyncPlayerChatEvent instance.
+     *
+     * @param event  The AsyncPlayerChatEvent instance.
      * @param player The Player instance.
      */
     private void replaceColorsAndFormats(AsyncPlayerChatEvent event, Player player) {
-        if (configManager.getConfigurationOption(ConfigOption.COLOURS_ENABLED)) {
+        if (configManager.getBoolean(ConfigOption.COLOURS_ENABLED)) {
             if (player.hasPermission("chatpro.colors")) {
                 event.setMessage(setFormatting(event.getMessage()));
             }
@@ -56,7 +62,8 @@ public class ChatManager {
 
     /**
      * Formats the player's message.
-     * @param event The AsyncPlayerChatEvent instance.
+     *
+     * @param event  The AsyncPlayerChatEvent instance.
      * @param player The Player instance.
      */
     private void formatMessage(AsyncPlayerChatEvent event, Player player) {
@@ -72,36 +79,37 @@ public class ChatManager {
         event.setFormat(format);
     }
 
-    // Replace '&'with the '§' chat code symbol.
-    public static String setFormatting(String output) {
-        return output.replace("&", "§");
-    }
-
     /**
      * Filters IPs in the player's message.
-     * @param event The AsyncPlayerChatEvent instance.
+     *
+     * @param event  The AsyncPlayerChatEvent instance.
      * @param player The Player instance.
      */
     private void filterIPs(AsyncPlayerChatEvent event, Player player) {
-        if (configManager.getConfigurationOption(ConfigOption.FILTER_IP)) {
-            for (String word : event.getMessage().toLowerCase().split(" ")) {
-                if (IsIpv4Address(word)) {
-                    if (getBlockMessage()) {
-                        event.setCancelled(true);
-                        player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
-                        return;
-                    }
-                    if (configManager.getConfigurationOption(ConfigOption.REPLACE_WORD_IN_MESSAGE)) {
-                        event.setMessage(event.getMessage().replace(word, getFilteredWordReplacement()));
-                    }
-                }
+        if (!configManager.getBoolean(ConfigOption.FILTER_IP))
+            return;
+
+        for (String word : event.getMessage().toLowerCase().split(" ")) {
+            if (!IsIpv4Address(word))
+                continue;
+
+            if (getBlockMessage()) {
+                event.setCancelled(true);
+                player.sendMessage(ChatColor.RED + "Do not send any IP addresses in the chat!");
+                break;
+            }
+
+            if (configManager.getConfigurationOption(ConfigOption.REPLACE_WORD_IN_MESSAGE)) {
+                event.setMessage(event.getMessage().replace(word, getFilteredWordReplacement()));
             }
         }
     }
 
+
     /**
      * Filters words in the player's message.
-     * @param event The AsyncPlayerChatEvent instance.
+     *
+     * @param event  The AsyncPlayerChatEvent instance.
      * @param player The Player instance.
      */
     private void filterWords(AsyncPlayerChatEvent event, Player player) {
@@ -114,21 +122,28 @@ public class ChatManager {
                     .mapToObj(c -> String.valueOf((char) c))
                     .collect(Collectors.joining(" "));
 
-            if (playerMessage.contains(filterWordString) || playerMessage.contains(spacedFilterWord)) {
-                if (getBlockMessage()) {
-                    player.sendMessage(ChatColor.RED + getBlockedMessageNotification());
-                    event.setCancelled(true);
-                    return;
-                }
+            if (!playerMessage.contains(filterWordString) && !playerMessage.contains(spacedFilterWord))
+                continue;
 
-                playerMessage = playerMessage.replace(filterWordString, replacement);
-                playerMessage = playerMessage.replace(spacedFilterWord, replacement);
+            if (getBlockMessage()) {
+                player.sendMessage(ChatColor.RED + getBlockedMessageNotification());
+                event.setCancelled(true);
+                return;
             }
+
+            playerMessage = playerMessage.replace(filterWordString, replacement);
+            playerMessage = playerMessage.replace(spacedFilterWord, replacement);
         }
 
         event.setMessage(playerMessage);
     }
 
+    /**
+     * Checks if the given message is an IPv4 address.
+     *
+     * @param message The message to check.
+     * @return A boolean indicating whether the message is an IPv4 address.
+     */
     private boolean IsIpv4Address(final String message) {
         Matcher matcher = pattern.matcher(message);
         return matcher.matches();
@@ -136,6 +151,7 @@ public class ChatManager {
 
     /**
      * Returns the list of filtered words.
+     *
      * @return An array of filtered words.
      */
     private String[] getFilteredWords() {
@@ -145,14 +161,16 @@ public class ChatManager {
 
     /**
      * Returns the block message configuration option.
+     *
      * @return A boolean indicating whether the block message option is enabled.
      */
     private boolean getBlockMessage() {
-        return configManager.getConfigurationOption(ConfigOption.BLOCK_MESSAGE);
+        return configManager.getBoolean(ConfigOption.BLOCK_MESSAGE);
     }
 
     /**
      * Returns the filtered word replacement configuration option.
+     *
      * @return A string representing the filtered word replacement.
      */
     private String getFilteredWordReplacement() {
@@ -161,6 +179,7 @@ public class ChatManager {
 
     /**
      * Returns the blocked message notification configuration option.
+     *
      * @return A string representing the blocked message notification.
      */
     private String getBlockedMessageNotification() {

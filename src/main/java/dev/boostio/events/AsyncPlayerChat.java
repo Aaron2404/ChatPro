@@ -11,14 +11,16 @@ public class AsyncPlayerChat implements Listener {
 
     /**
      * Constructor for AsyncPlayerChat.
+     *
      * @param plugin The ChatPro plugin instance.
      */
-    public AsyncPlayerChat(ChatPro plugin){
+    public AsyncPlayerChat(ChatPro plugin) {
         this.chatManager = plugin.getChatManager();
     }
 
     /**
      * Event handler for AsyncPlayerChatEvent.
+     *
      * @param event The AsyncPlayerChatEvent instance.
      */
     @EventHandler

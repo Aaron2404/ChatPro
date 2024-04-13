@@ -15,16 +15,14 @@ import java.util.UUID;
 
 @Getter
 public final class ChatPro extends JavaPlugin {
-    private ConfigManager configManager;
-    private ChatManager chatManager;
-    private ColorManager colorManager;
-
-    private PaperCommandManager commandManager;
-    private BukkitAudiences adventure;
-
     @Getter
     private static ChatPro instance;
     private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
+    private ConfigManager configManager;
+    private ChatManager chatManager;
+    private ColorManager colorManager;
+    private PaperCommandManager commandManager;
+    private BukkitAudiences adventure;
 
     @Override
     public void onLoad() {

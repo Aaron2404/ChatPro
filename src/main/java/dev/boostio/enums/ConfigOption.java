@@ -2,7 +2,6 @@ package dev.boostio.enums;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Getter
@@ -23,8 +22,6 @@ public enum ConfigOption {
     BLOCKED_MESSAGE_NOTIFICATION("censoring.blocked-message-notification", "Your message contained a filtered word, and it has been canceled."),
     REPLACE_WORD_IN_MESSAGE("censoring.replace-word-in-message", true),
     FILTERED_WORD_REPLACEMENT("censoring.filtered-word-replacement", "*");
-
-
 
     private final String key;
     private final Object defaultValue;
