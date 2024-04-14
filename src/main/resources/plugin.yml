@@ -1,7 +1,7 @@
 name: ChatPro
 author: Aaron
 description: ChatPro is a plugin which manages certain chat features.
-version: '2.0.0'
+version: '2.1.0'
 main: dev.boostio.ChatPro
 api-version: '1.13'
 permissions:

@@ -31,6 +31,9 @@ format:
   better-message-format: true
 
 censoring:
+  # Allow the player to choose if they want to censor their messages, instead of it being filtered server side.
+  client-side-filtering: true;
+
   # List of stings that will be filtered by the plugin.
   filtered-words: ['Fuck', 'Shit', 'ChatPro is bad']
   filter-ip: true

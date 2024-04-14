@@ -29,14 +29,31 @@ public class ChatManager {
         Player player = event.getPlayer();
 
         // Handle filter.
-        filterIPs(event, player);
-        filterWords(event, player);
+        handleFilter(event, player);
 
         // Handle colors and formats.
+        handleColourAndFormat(event, player);
+    }
+
+    /**
+     * Add colour and formatting to the player's chat message.
+     * @param event The AsyncPlayerChatEvent instance.
+     * @param player The Player instance.
+     */
+    public void handleColourAndFormat(AsyncPlayerChatEvent event, Player player) {
         replaceColorsAndFormats(event, player);
         formatMessage(event, player);
     }
 
+    /**
+     * Filter the player's chat message.
+     * @param event The AsyncPlayerChatEvent instance.
+     * @param player The Player instance.
+     */
+    public void handleFilter(AsyncPlayerChatEvent event, Player player) {
+        filterIPs(event, player);
+        filterWords(event, player);
+    }
 
     /**
      * Replaces colors and formats in the player's message.

@@ -17,6 +17,7 @@ public enum ConfigOption {
 
     BETTER_MESSAGE_FORMAT("format.better-message-format", true),
 
+    CLIENT_SIDE_CENSORING("censoring.client-side-censoring", true),
     FILTERED_WORDS("censoring.filtered-words", Arrays.asList("Fuck", "Shit")),
     FILTER_IP("censoring.filter-ip", true),
     BLOCK_MESSAGE("censoring.block-message", false),

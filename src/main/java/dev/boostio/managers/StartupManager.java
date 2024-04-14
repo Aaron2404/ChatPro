@@ -1,12 +1,14 @@
 package dev.boostio.managers;
 
 import co.aikar.commands.PaperCommandManager;
+import com.github.retrooper.packetevents.PacketEvents;
 import dev.boostio.ChatPro;
 import dev.boostio.commands.NameColorCommand;
 import dev.boostio.events.AsyncPlayerChat;
 import dev.boostio.events.AsyncPlayerPreLogin;
 import dev.boostio.events.InventoryClick;
 import dev.boostio.events.PlayerQuit;
+import dev.boostio.packetlistener.PlayerChatListener;
 
 /**
  * Manages the start-up processes of the plugin, including the registration of commands and events.
@@ -34,6 +36,7 @@ public class StartupManager {
     private void load() {
         registerCommands();
         registerEvents();
+        registerPacketListener();
     }
 
     /**
@@ -51,5 +54,9 @@ public class StartupManager {
         plugin.getServer().getPluginManager().registerEvents(new AsyncPlayerChat(this.plugin), this.plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerQuit(), this.plugin);
         plugin.getServer().getPluginManager().registerEvents(new InventoryClick(this.plugin), this.plugin);
+    }
+
+    private void registerPacketListener() {
+        PacketEvents.getAPI().getEventManager().registerListener(new PlayerChatListener());
     }
 }
